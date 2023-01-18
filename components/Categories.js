@@ -5,6 +5,7 @@ import CategoryCard from "./CategoryCard";
 const Categories = () => {
   return (
     <ScrollView
+      overScrollMode="never"
       horizontal
       contentContainerStyle={{
         paddingHorizontal: 15,
@@ -14,7 +15,6 @@ const Categories = () => {
     >
       <CategoryCard title="test" imgUrl="https://links.papareact.com/gn7" />
       <CategoryCard title="test" imgUrl={"https://links.papareact.com/gn7"} />
-
       <CategoryCard title="test" imgUrl={"https://links.papareact.com/gn7"} />
       <CategoryCard title="test" imgUrl={"https://links.papareact.com/gn7"} />
       <CategoryCard title="test" imgUrl={"https://links.papareact.com/gn7"} />

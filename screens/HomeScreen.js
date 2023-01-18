@@ -16,6 +16,7 @@ import {
   ChevronDownIcon,
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
+import FeaturedRow from "../components/FeaturedRow";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -59,8 +60,23 @@ const HomeScreen = () => {
           <AdjustmentsVerticalIcon color="#000000" />
         </View>
       </SafeAreaView>
-      <ScrollView>
+      <ScrollView alwaysBounceVertical={false} bounces={false} overScrollMode="never">
         <Categories />
+        <FeaturedRow
+          id={1}
+          title="Featured"
+          description="Best restaurant near you"
+        />
+        <FeaturedRow
+          id={2}
+          title="Big Discounts"
+          description="Awesome Discounts"
+        />
+        <FeaturedRow
+          id={3}
+          title="Top Rated"
+          description="Best restaurant near you"
+        />
       </ScrollView>
     </>
   );
