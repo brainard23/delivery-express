@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../GlobalStyles";
 import {
@@ -17,15 +17,35 @@ import {
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
 import FeaturedRow from "../components/FeaturedRow";
+import client from "../sanity";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [featuredCategory, setFeaturedCategory] = useState([]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
 
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == 'featured'] {
+      ..., 
+      restaurants[]->{
+        ...,
+        dishes[]->{
+          ...,
+        }
+      }
+    }`
+      )
+      .then((data) => {
+        setFeaturedCategory(data);
+      });
+  }, []);
   return (
     <>
       <SafeAreaView
@@ -60,23 +80,21 @@ const HomeScreen = () => {
           <AdjustmentsVerticalIcon color="#000000" />
         </View>
       </SafeAreaView>
-      <ScrollView alwaysBounceVertical={false} bounces={false} overScrollMode="never">
+      <ScrollView
+        alwaysBounceVertical={false}
+        bounces={false}
+        overScrollMode="never"
+      >
         <Categories />
-        <FeaturedRow
-          id={1}
-          title="Featured"
-          description="Best restaurant near you"
-        />
-        <FeaturedRow
-          id={2}
-          title="Big Discounts"
-          description="Awesome Discounts"
-        />
-        <FeaturedRow
-          id={3}
-          title="Top Rated"
-          description="Best restaurant near you"
-        />
+        {featuredCategory.map((category) => (
+          <FeaturedRow
+            id={category._id}
+            key={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
+
       </ScrollView>
     </>
   );
