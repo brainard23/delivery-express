@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard";
 import client, { urlFor } from "../sanity";
@@ -16,7 +16,7 @@ const Categories = () => {
         setCategory(data);
       });
   }, []);
-console.log(category)
+
   return (
     <ScrollView
       overScrollMode="never"
@@ -28,7 +28,7 @@ console.log(category)
       showsHorizontalScrollIndicator={false}
     >
       {category.map(categories => (
-      <CategoryCard id={categories._id} key={categories._id} title={categories.name} imgUrl={urlFor(categories.image).width(200).url()} />
+      <CategoryCard id={categories._id} key={categories._id} title={categories.name} imgUrl={urlFor(categories.image).width(200).url()  } />
 
       ))}
     
