@@ -3,9 +3,12 @@ import React, { useLayoutEffect } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import {
   ArrowLeftIcon,
+  ChevronRightIcon,
   MapPinIcon,
+  QuestionMarkCircleIcon,
   StarIcon,
 } from "react-native-heroicons/solid";
+import DishRow from "../components/DishRow";
 import { urlFor } from "../sanity";
 
 const RestaurantScreen = () => {
@@ -31,9 +34,12 @@ const RestaurantScreen = () => {
       headerShown: false,
     });
   }, []);
-
   return (
-    <ScrollView>
+    <ScrollView
+      alwaysBounceHorizontal={false}
+      bounces={false}
+      overScrollMode="never"
+    >
       <View className="relative">
         <Image
           source={{
@@ -68,6 +74,26 @@ const RestaurantScreen = () => {
           </View>
           <Text className="text-gray-500 mt-2 pb-4">{short_description}</Text>
         </View>
+
+        <TouchableOpacity className="flex-row items-center space-x-2 p-4 border-y-2 border-gray-300">
+          <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} />
+          <Text className="flex-1 text-md font-bold">Have a food allergy?</Text>
+          <ChevronRightIcon color="#00CCBB" />
+        </TouchableOpacity>
+      </View>
+
+      <View>
+        <Text className="px-4 pt-6 mb-3 font-bold text-xl">Menu</Text>
+        {dishes.map((dish) => (
+          <DishRow
+            key={dish._id}
+            id={dish._id}
+            name={dish.name}
+            description={dish.short_description}
+            price={dish.price}
+            Image={dish.image}
+          />
+        ))}
       </View>
     </ScrollView>
   );
